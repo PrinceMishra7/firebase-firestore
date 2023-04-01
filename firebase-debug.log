@@ -1,0 +1,21 @@
+[debug] [2023-04-01T11:36:35.017Z] ----------------------------------------------------------------------
+[debug] [2023-04-01T11:36:35.020Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\LENOVO\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2023-04-01T11:36:35.021Z] CLI Version:   11.25.2
+[debug] [2023-04-01T11:36:35.021Z] Platform:      win32
+[debug] [2023-04-01T11:36:35.021Z] Node Version:  v16.14.0
+[debug] [2023-04-01T11:36:35.022Z] Time:          Sat Apr 01 2023 17:06:35 GMT+0530 (India Standard Time)
+[debug] [2023-04-01T11:36:35.022Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-04-01T11:36:35.031Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-04-01T11:36:35.031Z] > authorizing via signed-in user (prince.mishra@spit.ac.in)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\LENOVO\OneDrive\Desktop\firebase-firestore
+

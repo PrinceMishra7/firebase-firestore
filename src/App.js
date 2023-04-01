@@ -1,12 +1,15 @@
 import {react, useState,useEffect} from 'react';
 import Auth from './components/Auth';
-import {db} from './config/Firebse'
-import { getDocs, collection, addDoc,deleteDoc,doc } from 'firebase/firestore';
+import {db, auth,storage} from './config/Firebse'
+import { getDocs, collection, addDoc,deleteDoc,doc , updateDoc} from 'firebase/firestore';
+import { ref,uploadBytes } from 'firebase/storage';
 function App() { 
   const [movieList,setMovieList]=useState([])
   const [movieTitle,setMovieTitle]=useState("")
   const [leadRole,setLeadRole]=useState("")
   const [releaseYear,setReleaseYear]=useState(0)
+  const [newTitle,setNewTitle]=useState("")
+  const [myFile,setMyFile]=useState(null)
 
   // fetch data
   const movieCollectionRef=collection(db,"movies");
@@ -37,7 +40,8 @@ function App() {
         {
           title:movieTitle,
           year:releaseYear,
-          leadRole:leadRole
+          leadRole:leadRole,
+          userId:auth?.currentUser?.uid
         })
 
       getMovieList();
@@ -53,7 +57,8 @@ function App() {
   const deleteMovie= async(_id)=>{
     try {
     const movieDoc=doc(db,"movies",_id);
-    await deleteDoc(movieDoc);
+    const res=await deleteDoc(movieDoc);
+    console.log("delete",res)
     getMovieList();
     } catch (error) {
       console.log(error)
@@ -62,6 +67,32 @@ function App() {
   }
   
   // update data
+  const updateTitle=async(_id)=>{
+      try {
+        const movieDoc=doc(db,"movies",_id);
+        const res=await updateDoc(movieDoc,{title:newTitle})
+        console.log(res)
+        getMovieList();
+      } catch (error) {
+        console.log(error.message)
+      }
+  }
+
+
+  // upload file
+  const uploadFile=async()=>{
+    if(!myFile) return;
+    console.log(myFile)
+
+    try {
+      const filesFolderRef=ref(storage,`projectFiles/${myFile.name}`);
+      const res=await uploadBytes(filesFolderRef,myFile)
+      console.log(res)
+    } catch (error) {
+      console.log(error.message)
+    }
+
+  }
   
   return ( 
     <div className="App">
@@ -82,10 +113,28 @@ function App() {
           <h3>{movie.leadRole}</h3>
           <p>{movie.year}</p>
           <button onClick={()=>deleteMovie(movie.id)}>Delete</button>
+          <input type="text" placeholder='Change Title' onChange={(e)=>{
+            setNewTitle(e.target.value)
+          }} />
+          <button onClick={
+            ()=>{
+            updateTitle(movie.id)
+          }
+        }
+          >Update</button>
         </div>
       ))}
     </div>
 
+
+        {/* upload a file */}
+
+        <div>
+          <input type="file" onChange={(e)=>{
+            setMyFile(e.target.files[0])
+          }}/>
+          <button onClick={uploadFile}>UPLOAD</button>
+        </div>
     </div> 
   );
 }
