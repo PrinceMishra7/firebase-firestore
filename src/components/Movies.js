@@ -1,6 +1,8 @@
 import {react, useState,useEffect} from 'react';
 import {db} from '../config/Firebse'
 import { getDocs, collection, deleteDoc,doc , updateDoc} from 'firebase/firestore';
+import {auth} from '../config/Firebse'
+import { signOut} from 'firebase/auth'
 import {useNavigate} from 'react-router-dom'
 const Movies = () => {
     const [movieList,setMovieList]=useState([])
@@ -57,12 +59,18 @@ const Movies = () => {
   <div>
         {/* Add movies */}
 
-        <div class="flex justify-end mr-10 p-12" style={{marginRight:'105px'}}>
+        <div class="flex justify-between mr-10 p-12" style={{marginRight:'105px'}}>
                         <button class="px-6 py-3 leading-5 text-xl text-white transition-colors font-bold duration-200 transform bg-indigo-700 rounded-md hover:bg-indigo-900 focus:outline-none focus:bg-gray-600" onClick={
                           ()=>{
                             navigate('/add-movie');
                           }
               }>Add Movie</button>
+                        <button class="px-6 py-3 leading-5 text-xl text-white transition-colors font-bold duration-200 transform bg-indigo-700 rounded-md hover:bg-indigo-900 focus:outline-none focus:bg-gray-600" 
+                        onClick={async ()=>{
+                          await signOut(auth)
+                          navigate('/')
+                      }}
+              >Logout</button>
         </div>
 
 
